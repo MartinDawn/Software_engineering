@@ -27,6 +27,13 @@ class SignInView(APIView):
                     'username': user.username,
                     'email': user.email,
                     'role': user.role,
+                    'full_name':user.full_name,
+                    'availablePages':user.availablePages,
+                    'major':user.major,
+                    'enrollment_year':user.enrollment_year,
+                    'is_able_buying': user.is_able_buying,
+                    'working_location':user.working_location,
+                    'department_name':user.department_name,
                 }
             }, status=status.HTTP_200_OK)
         return Response({"detail": "Invalid credentials."}, status=status.HTTP_401_UNAUTHORIZED)

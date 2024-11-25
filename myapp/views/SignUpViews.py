@@ -8,7 +8,8 @@ from rest_framework.permissions import AllowAny
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'full_name', 'role', 'availablePages', 'major', 'enrollment_year', 'working_location', 'department_name')
+        fields = ('id', 'username', 'email', 'password', 'full_name', 'role', 'availablePages',\
+                  'is_able_buying', 'major', 'enrollment_year', 'working_location', 'department_name')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
