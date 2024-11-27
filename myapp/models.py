@@ -56,6 +56,8 @@ class Print_history(models.Model):
     owner_id = models.CharField(max_length=255,default='')
     numberOfPages= models.IntegerField(default=0)
     page_id= models.CharField(max_length=255, default='')
+    printerId = models.CharField(max_length=255, default='')
+    datetime = models.DateTimeField(default='2024-01-01 12:00:00')
     class Meta:
         db_table = 'Print_history'
     
@@ -69,6 +71,7 @@ class Printer(models.Model):
 class Paper(models.Model):
     type= models.CharField(max_length=255,default='')
     costPerPaper=models.IntegerField(default=0)
+    page= models.IntegerField(default=1)
     class Meta:
         db_table = 'Paper'
 

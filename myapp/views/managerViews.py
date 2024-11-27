@@ -24,9 +24,6 @@ class SetEnableBuyingView(APIView):
         
         naive_datetime = datetime.fromisoformat(requested_time_str)
         aware_datetime = timezone.make_aware(naive_datetime, timezone.get_current_timezone())
-        print(naive_datetime)
-        print(aware_datetime)
-        print(timezone.localtime(timezone.now()))
         def job():
             self.setEnable()
 
@@ -34,7 +31,7 @@ class SetEnableBuyingView(APIView):
         delay = (aware_datetime - timezone.localtime(timezone.now())).total_seconds()
         if delay <= 0:
             return Response({
-                "message": "Thời điểm mục tiêu đã qua."
+                "message": "Thời điểm đã qua."
             }, status=status.HTTP_400_BAD_REQUEST)
         schedule.every(delay).seconds.do(job)
         threading.Thread(target=self.run_scheduler).start()
@@ -71,7 +68,7 @@ class SetDisableBuyingView(APIView):
         delay = (aware_datetime - timezone.localtime(timezone.now())).total_seconds()
         if delay <= 0:
             return Response({
-                "message": "Thời điểm mục tiêu đã qua."
+                "message": "Thời điểm đã qua."
             }, status=status.HTTP_400_BAD_REQUEST)
         schedule.every(delay).seconds.do(job)
         threading.Thread(target=self.run_scheduler).start()
@@ -86,4 +83,34 @@ class SetDisableBuyingView(APIView):
             time.sleep(1)
 
 
-    
+from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
+from ..models import User
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'password', 'full_name', 'role', 'availablePages',\
+                  'is_able_buying', 'major', 'enrollment_year', 'working_location', 'department_name')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        validated_data['password'] = make_password(validated_data['password'])
+        return super().create(validated_data)
+
+class SignUpView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "message": "User created successfully."
+        }, status=status.HTTP_201_CREATED)   
