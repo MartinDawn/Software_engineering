@@ -70,7 +70,6 @@ class Printer(models.Model):
 
 class Paper(models.Model):
     type= models.CharField(max_length=255,default='')
-    costPerPaper=models.IntegerField(default=0)
     page= models.IntegerField(default=1)
     class Meta:
         db_table = 'Paper'
