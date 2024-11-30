@@ -1,0 +1,105 @@
+.navbar {
+  width: 100vw; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 10px 20px; 
+  background-color: #f8f9fa; 
+  border-bottom: 1px solid #ddd; 
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+}
+
+.navbar .menu {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar .menu a {
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.navbar .menu a:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.navbar .user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.navbar .user-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.navbar .dropdown-arrow {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.navbar .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 0;
+  top: 47.5px;
+}
+
+.navbar .dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.navbar .dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.navbar .dropdown-content {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 5px 10px;
+  }
+
+  .navbar .menu a {
+    padding: 5px;
+  }
+
+  .navbar .user-logo {
+    width: 25px;
+    height: 25px;
+  }
+
+  .navbar .dropdown-arrow {
+    width: 15px;
+    height: 15px;
+  }
+}

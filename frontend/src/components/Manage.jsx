@@ -37,22 +37,27 @@ function Header() {
 function Body() {
     const [showForm, setShowForm] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
-    const [printerDetails, setPrinterDetails] = useState({
+    const [showPrinter, setShowPrinter] = useState({
+        name: '',
+        manufacturer: '',
         type: '',
+        description: '',
         location: '',
-        status: '',
-        enable_printing: '',
+        status: ''
+    });
+    const [printerDetails, setPrinterDetails] = useState({
+        enable_type : '',
+        enable_printing : '',
+        location : '',
     });
     const [printers, setPrinters] = useState([]);
     // const [printer, setPrinter] = useState({});
 
     const handleAddPrinter = () => {
         setPrinterDetails({
-            id: '',
-            type: '',
-        location: '',
-        status: '',
-        enable_printing: '',
+            enable_type : '',
+            enable_printing : '',
+            location : '',
         });
         setShowForm(true);
         setShowDetails(false);
@@ -67,7 +72,7 @@ function Body() {
         try {
           const response = await api.get('/spso/printer/printerActivity/', {
             headers: {
-              Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyOTEyNzk3LCJpYXQiOjE3MzI5MDkxOTcsImp0aSI6IjNkZGIxNzVmNWQ3MzQ0N2ViN2M0Yzg2MjY3MDRhODk4IiwidXNlcl9pZCI6Mn0.3Ta3GBZoIPEpefsLJrtqyqFnSxouuIVyXOk1FYwDM4M'}` // Add the token to the Authorization header
+              Authorization: `Bearer ${token}` // Add the token to the Authorization header
             }
           });
           setPrinters(response.data.printers);
@@ -82,11 +87,11 @@ function Body() {
         try {
           const response = await api.post('/spso/printer/printerActivity/', { id: printerId.id }, {
             headers: {
-              Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyOTEyNzk3LCJpYXQiOjE3MzI5MDkxOTcsImp0aSI6IjNkZGIxNzVmNWQ3MzQ0N2ViN2M0Yzg2MjY3MDRhODk4IiwidXNlcl9pZCI6Mn0.3Ta3GBZoIPEpefsLJrtqyqFnSxouuIVyXOk1FYwDM4M'}` // Add the token to the Authorization header
+              Authorization: `Bearer ${token}` // Add the token to the Authorization header
             }
           });
         //   setPrinter(response.data.printer);
-        //   console.log("Response from API:", response.data.printer.id);
+          console.log("Response from API:", response.data.printer.id);
         //   console.log("Printer details:", printer.id);
           const printerInfo = {
             name: `Máy in ${response.data.printer.id}`,
@@ -96,7 +101,7 @@ function Body() {
             location: response.data.printer.location,
             status: response.data.printer.enable_printing ? 'Kích hoạt' : 'Vô hiệu'
           };
-          setPrinterDetails(printerInfo);
+          setShowPrinter(printerInfo);
           setShowDetails(true);
           setShowForm(false);
         } catch (error) {
@@ -111,7 +116,7 @@ function Body() {
         try {
           const response = await api.post('/spso/printer/addPrinter/', printerDetails, {
             headers: {
-              Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyOTEyNzk3LCJpYXQiOjE3MzI5MDkxOTcsImp0aSI6IjNkZGIxNzVmNWQ3MzQ0N2ViN2M0Yzg2MjY3MDRhODk4IiwidXNlcl9pZCI6Mn0.3Ta3GBZoIPEpefsLJrtqyqFnSxouuIVyXOk1FYwDM4M'}` // Add the token to the Authorization header
+              Authorization: `Bearer ${token}` // Add the token to the Authorization header
             }
           });
           console.log("Response from API:", response.data);
@@ -132,80 +137,55 @@ function Body() {
                     </div>
                 </div>
 
-                {showForm && (
-                    <form onSubmit={handleSubmit} className="add-printer-form">
-                        <h2>Thêm máy in mới</h2>
-                        <input
-                            type="text"
-                            name="type"
-                            placeholder="Tên máy in"
-                            value={printerDetails.name}
-                            onChange={(e) => setPrinterDetails({ ...printerDetails, name: e.target.value })}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="manufacturer"
-                            placeholder="Hãng sản xuất"
-                            value={printerDetails.manufacturer}
-                            onChange={(e) => setPrinterDetails({ ...printerDetails, manufacturer: e.target.value })}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="type"
-                            placeholder="Loại máy"
-                            value={printerDetails.type}
-                            onChange={(e) => setPrinterDetails({ ...printerDetails, type: e.target.value })}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="description"
-                            placeholder="Mô tả"
-                            value={printerDetails.description}
-                            onChange={(e) => setPrinterDetails({ ...printerDetails, description: e.target.value })}
-                        />
-                        <div>
-                            <span>Cơ sở: </span>
-                            <select
-                                name="location"
-                                value={printerDetails.location}
-                                onChange={(e) => setPrinterDetails({ ...printerDetails, location: e.target.value })}
-                                required
-                            >
-                                <option value="" disabled>Chọn cơ sở</option>
-                                <option value="toa">Tòa</option>
-                                <option value="phong">Phòng</option>
-                            </select>
-                        </div>
-                        <div>
-                            <span>Trạng thái: </span>
-                            <select
-                                name="status"
-                                value={printerDetails.status}
-                                onChange={(e) => setPrinterDetails({ ...printerDetails, status: e.target.value })}
-                                required
-                            >
-                                <option value="" disabled>Chọn trạng thái</option>
-                                <option value="kichhoat">Kích hoạt</option>
-                                <option value="vohieu">Vô hiệu</option>
-                            </select>
-                        </div>
-                        <button type="submit" className="btn-primary">Lưu máy in</button>
-                        <button type="button" onClick={() => setShowForm(false)}>Hủy</button>
-                    </form>
-                )}
-
-                {showDetails && (
+               {showForm && (
+        <form onSubmit={handleSubmit} className="add-printer-form">
+          <div>
+            <label htmlFor="enable_type">Enable Type:</label>
+            <input
+              type="text"
+              id="enable_type"
+              value={printerDetails.enable_type}
+              onChange={(e) => setPrinterDetails({ ...printerDetails, enable_type: e.target.value })}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="enable_printing">Enable Printing:</label>
+            <select
+              type="text"
+              id="enable_printing"
+              value={printerDetails.enable_printing}
+              onChange={(e) => setPrinterDetails({ ...printerDetails, enable_printing: e.target.value === "kichhoat" })}
+              required
+            >
+            <option value="" disabled>Chọn trạng thái</option>
+            <option value="kichhoat">Kích hoạt</option>
+            <option value="vohieu">Vô hiệu</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="location">Location:</label>
+            <input
+              type="text"
+              id="location"
+              value={printerDetails.location}
+              onChange={(e) => setPrinterDetails({ ...printerDetails, location: e.target.value })}
+              required
+            />
+          </div>
+          <button type="submit" className="btn-primary">Lưu máy in</button>
+          <button type="button" onClick={() => setShowForm(false)}>Hủy</button>
+        </form>
+      )}
+{showDetails && (
                     <div className="printer-details">
                         <h2>Thông tin máy in</h2>
-                        <p><strong>Tên máy in:</strong> {printerDetails.name}</p>
-                        <p><strong>Hãng sản xuất:</strong> {printerDetails.manufacturer}</p>
-                        <p><strong>Loại máy:</strong> {printerDetails.type}</p>
-                        <p><strong>Mô tả:</strong> {printerDetails.description}</p>
-                        <p><strong>Cơ sở:</strong> {printerDetails.location}</p>
-                        <p><strong>Trạng thái:</strong> {printerDetails.status}</p>
+                        <p><strong>Tên máy in:</strong> {showPrinter.name}</p>
+                        <p><strong>Hãng sản xuất:</strong> {showPrinter.manufacturer}</p>
+                        <p><strong>Loại máy:</strong> {showPrinter.type}</p>
+                        <p><strong>Mô tả:</strong> {showPrinter.description}</p>
+                        <p><strong>Cơ sở:</strong> {showPrinter.location}</p>
+                        <p><strong>Trạng thái:</strong> {showPrinter.status}</p>
                         <button className="btn-activate" onClick={() => alert('Kích hoạt máy in')}>Kích hoạt</button>
                         <button className="btn-disable" onClick={() => alert('Vô hiệu hóa máy in')}>Vô hiệu hóa</button>
                         <button onClick={() => setShowDetails(false)}>Trở lại</button>

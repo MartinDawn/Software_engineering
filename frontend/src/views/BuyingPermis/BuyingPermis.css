@@ -1,0 +1,50 @@
+.manage-buying {
+    width: 100%;
+    max-width: 800px;
+    margin: 125px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display:flex;
+    flex-direction:column;
+  }
+  
+  .new-period-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .new-period-form input,
+  .new-period-form label {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .new-period-form button {
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .new-period-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .period-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .period-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }

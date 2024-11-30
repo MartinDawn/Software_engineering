@@ -1,0 +1,49 @@
+.view-printer {
+    display:flex;
+    justify-content: center;
+    padding: 50px;
+    padding-top: 100px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 250px;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .printer-table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .printer-table th,
+  .printer-table td {
+    border: 1px solid #d9d8d8;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .printer-table th {
+    background-color: #d0cccc;
+  }
+  
+  .printer-table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+  }
+  
+  .status-available {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .status-unavailable {
+    color: red;
+    font-weight: bold;
+  }
+  

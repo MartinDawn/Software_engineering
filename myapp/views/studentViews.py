@@ -63,7 +63,8 @@ class PrintDocumentView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        student_id = request.data.get('student_id')
+        user = request.user
+        student_id = user.id  # Extract the student ID from the JWT token
         file_name = request.data.get('file_name')
         file_size = request.data.get('file_size')
         number_of_pages = request.data.get('number_of_pages')
