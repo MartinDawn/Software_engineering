@@ -38,24 +38,21 @@ function Body() {
     const [showForm, setShowForm] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [printerDetails, setPrinterDetails] = useState({
-        name: '',
-        manufacturer: '',
         type: '',
-        description: '',
         location: '',
-        status: ''
+        status: '',
+        enable_printing: '',
     });
     const [printers, setPrinters] = useState([]);
     // const [printer, setPrinter] = useState({});
 
     const handleAddPrinter = () => {
         setPrinterDetails({
-            name: '',
-            manufacturer: '',
+            id: '',
             type: '',
-            description: '',
-            location: '',
-            status: ''
+        location: '',
+        status: '',
+        enable_printing: '',
         });
         setShowForm(true);
         setShowDetails(false);
@@ -140,7 +137,7 @@ function Body() {
                         <h2>Thêm máy in mới</h2>
                         <input
                             type="text"
-                            name="name"
+                            name="type"
                             placeholder="Tên máy in"
                             value={printerDetails.name}
                             onChange={(e) => setPrinterDetails({ ...printerDetails, name: e.target.value })}

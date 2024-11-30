@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/PrintHis.css';
 import logoBK from '../Image/logo_BK2-removebg.png';
+
 function Header() {
     return (
         <div className="tt-navbar">
@@ -31,35 +32,47 @@ function Header() {
     );
 }
 
-function PrintHistoryFilter()
-{
+function PrintHistoryFilter() {
     const [selectedPrinter, setSelectedPrinter] = useState('');
     const [startDate, setStartDate] = useState(null);
     const [inputValue, setInputValue] = useState('');
     const [endDate, setEndDate] = useState(null);
+    const [userId, setUserId] = useState('');
+    const [userInfo, setUserInfo] = useState(null);
     const printers = ["Printer 1", "Printer 2", "Printer 3", "Printer 4"];
     const printHistoryData = [
-        { id: 16, name: "BIG DATA ANALYSIS_Nhom 17.pdf", printer: "Máy in 1", startTime: "09/12/2023, 22:40:46", endTime: "09/12/2023, 22:40:46", status: "Chưa in" },
-        { id: 15, name: "Assignment_2__Computer_Network.pdf", printer: "Máy in 2", startTime: "09/12/2023, 22:37:54", endTime: "09/12/2023, 22:37:54", status: "Chưa in" },
+        { id: 16, name: "CanNguyen", email: "cannguyentest@gmail.com", role: "Student", availablePages: "100", major:"Computer Science" ,enrollmentYear: "2022" },
+        { id: 15, name: "Leo", email: "leotest@gmail.com", role: "Manager", availablePages: "150",major:"Computer Science", enrollmentYear: "2020" },
         // Add more rows as needed
     ];
-    return(
 
+    const handleFetchUserInfo = async () => {
+        try {
+            const response = await fetch(`https://api.example.com/users/${userId}`);
+            const data = await response.json();
+            setUserInfo(data.student);
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+        }
+    };
+
+    return (
         <div className="his-container">
             <h2>Lịch sử in</h2>
-            
             <div className="filter-container">
                 <div className='sub-filter'>
-                    <span>Tên</span>
+                    
                     <input
                         type="text"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        placeholder='Nhập tên sinh viên'
+                        value={userId}
+                        onChange={(e) => setUserId(e.target.value)}
+                        placeholder='Nhập ID người dùng'
                     />
+                    <button onClick={handleFetchUserInfo}>Tìm</button>
                 </div>
+           
                 <div className='sub-filter'>
-                    <label>Chọn máy in</label>
+                    
                     <select
                         value={selectedPrinter}
                         onChange={(e) => setSelectedPrinter(e.target.value)}
@@ -69,37 +82,34 @@ function PrintHistoryFilter()
                             <option key={index} value={printer}>{printer}</option>
                         ))}
                     </select>
+                    <button>Xác nhận</button>
                 </div>
-                <div className='sub-filter' >
-                    <label>Chọn ngày bắt đầu</label>
-                    <DatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="dd/mm/yyyy"
-                    />
-                </div>
-                <div className='sub-filter'>
-                    <label>Chọn ngày kết thúc</label>
-                    <DatePicker
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="dd/mm/yyyy"
-                    />
-                </div>
-            </div>
+                <button className="viewallUser">Xem tất cả người dùng</button>
             
+            </div>
+            {userInfo && (
+                <div className="user-info">
+                    <h3>Thông tin người dùng</h3>
+                    <p>ID: {userInfo.id}</p>
+                    <p>Tên đăng nhập: {userInfo.username}</p>
+                    <p>Email: {userInfo.email}</p>
+                    <p>Họ và tên: {userInfo.full_name}</p>
+                    <p>Vai trò: {userInfo.role}</p>
+                    <p>Số trang còn lại: {userInfo.availablePages}</p>
+                    <p>Ngành học: {userInfo.major}</p>
+                    <p>Năm nhập học: {userInfo.enrollment_year}</p>
+                </div>
+            )}
             <table className="print-history-table">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Tên tài liệu</th>
-                        <th>Máy in</th>
-                        <th>Thời gian bắt đầu</th>
-                        <th>Thời gian kết thúc</th>
-                        <th>Trạng thái</th>
-                        <th>Xem chi tiết</th>
+                        <th>Tên người dùng</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Số trang còn lại</th>
+                        <th>Ngành</th>
+                        <th>Năm nhập học</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,18 +117,19 @@ function PrintHistoryFilter()
                         <tr key={item.id}>
                             <td>{item.id}</td>
                             <td>{item.name}</td>
-                            <td>{item.printer}</td>
-                            <td>{item.startTime}</td>
-                            <td>{item.endTime}</td>
-                            <td><span className="status-badge">{item.status}</span></td>
-                            <td><button className="details-button">🔍</button></td>
+                            <td>{item.email}</td>
+                            <td>{item.role}</td>
+                            <td>{item.availablePages}</td>
+                            <td>{ item.major}</td>
+                            <td>{ item.enrollmentYear}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
     );
-};
+}
+
 function Footer() {
     return (
         <footer className="footer">
@@ -140,6 +151,7 @@ function Footer() {
         </footer>
     );
 }
+
 function PrintHistory() {
     return (
         <>
@@ -149,4 +161,5 @@ function PrintHistory() {
         </>
     );
 }
+
 export default PrintHistory;
