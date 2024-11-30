@@ -1,0 +1,40 @@
+.view-printer-history {
+    text-align: center;
+    justify-content: center;
+    padding-top: 80px;
+    margin: 20px auto;
+    margin-bottom: 330px;
+    width: 80%;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .history-table th,
+  .history-table td {
+    border: 1px solid #000;
+    padding: 8px 12px;
+    text-align: center;
+  }
+  
+  .history-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .history-table td {
+    font-size: 16px;
+  }
+  
+  .history-table tr:nth-child(even) {
+    background-color: #ffffff;
+  }
+  

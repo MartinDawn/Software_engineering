@@ -1,0 +1,36 @@
+.view-printing-history {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .printing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .printing-table th,
+  .printing-table td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .printing-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .printing-table td {
+    font-size: 14px;
+  }
+  
+  .printing-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  

@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './layouts/Navbar/Navbar';
+import Footer from './layouts/Footer/Footer';
+import CreateAccPage from './app/homepage/createaccount/CreateAcc';
+import BuyPermisPage from './app/homepage/buyingpermis/BuyPermis';
+import ManageActPage from './app/homepage/manageactivity/ManageAct';
+import ViewPaymentPage from './app/homepage/viewpayment/ViewPay';
+import ViewPrintingHistory from './app/homepage/viewprint_manager/ViewPrint';
+import ViewPrinterPage from './app/homepage/viewprinter/PrinterPage';
+import ViewPrinterHistoryPage from './app/homepage/viewprinterhistory/ViewPrinterHis';
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Router>
+      <div id="root">
+        <Navbar />
+        <div className="main-content">
+          <Routes>
+            <Route path="/createaccount" element={<CreateAccPage />} />
+            <Route path="/buyingpermis" element={<BuyPermisPage />} />
+            <Route path="/manageactivity" element={<ManageActPage/>} />
+            <Route path="/viewpayment" element={<ViewPaymentPage/>}/>
+            <Route path="/viewprint_manager" element={<ViewPrintingHistory/>}/>
+            <Route path="/viewprinter" element={<ViewPrinterPage/>}/>
+            <Route path="/viewprinterhistory" element={<ViewPrinterHistoryPage />} />
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </Router>
+  );
 }
 
-export default App
+export default App;
