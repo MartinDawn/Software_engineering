@@ -39,7 +39,13 @@ function ProtectedRoute({children}){
             await refreshToken();
         }
         setIsAuthorized(true);  
-    }
+        const userRole = decoded.role;  // Access the role directly from the decoded token
+        if (allowedRoles.includes(userRole)) {
+          setIsAuthorized(true);
+        } else {
+          setIsAuthorized(false);
+        }
+      };
     if (isAuthorized === null) {
         return <div>Loading...</div>;
     }

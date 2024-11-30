@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'myproject.urls'
@@ -80,10 +82,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'Printer',
-        'HOST': 'localhost',
+        'USER': 'sa',
+        'PASSWORD': '<YourStrong@Passw0rd>',
+        'HOST': 'localhost,1434',
         'OPTIONS':{
             'driver': 'ODBC Driver 17 for SQL Server',
             'Trusted_Connection':'yes',
+            'Trustservercertificate':'yes',
         }
     }
 }
@@ -138,6 +143,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     )
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5182",
+]
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),

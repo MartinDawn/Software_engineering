@@ -32,7 +32,7 @@ class BuyPaperView(APIView):
         if total_cost != cost:
             return Response({"message": "Số tiền không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
         user = User.objects.get(id=user_id)
-        if not user.is_able_buying:
+        if not user.buying_enabled:
                 return Response({"message": "Giao dịch mua giấy hiện không khả dụng"}, status=status.HTTP_400_BAD_REQUEST)
         
         try:

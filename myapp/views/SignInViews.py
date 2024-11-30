@@ -31,7 +31,7 @@ class SignInView(APIView):
                     'availablePages':user.availablePages,
                     'major':user.major,
                     'enrollment_year':user.enrollment_year,
-                    'is_able_buying': user.is_able_buying,
+                    'buying_enabled': user.buying_enabled,
                     'working_location':user.working_location,
                     'department_name':user.department_name,
                 }

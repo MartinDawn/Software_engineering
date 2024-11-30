@@ -31,7 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     availablePages= models.IntegerField(default=0)
     major= models.CharField(max_length=255,default='')
     enrollment_year=models.DateField(default='2024-01-01')
-    is_able_buying = models.BooleanField(default=False)
+    buying_enabled = models.BooleanField(default=False)
 
     # SPSO
     working_location=models.CharField(max_length=255,default='')

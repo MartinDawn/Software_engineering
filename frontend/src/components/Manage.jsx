@@ -2,8 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import '../styles/Manage.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import logoBK from '../Image/logo_BK2-removebg.png';
+import api from '../api';
 function Header() {
     return (
         <div className="tt-navbar">
@@ -44,6 +45,8 @@ function Body() {
         location: '',
         status: ''
     });
+    const [printers, setPrinters] = useState([]);
+    // const [printer, setPrinter] = useState({});
 
     const handleAddPrinter = () => {
         setPrinterDetails({
@@ -58,26 +61,68 @@ function Body() {
         setShowDetails(false);
     };
 
-    const handlePrinterClick = (index) => {
-        
-        const printerInfo = {
-            name: `Máy in ${index + 1}`,
-            manufacturer: 'Hãng A',
-            type: 'Loại A',
-            description: 'Mô tả máy in',
-            location: index % 2 === 0 ? 'Tòa' : 'Phòng', // Ví dụ cơ sở
-            status: index % 2 === 0 ? 'Kích hoạt' : 'Vô hiệu'
-        };
-        setPrinterDetails(printerInfo);
-        setShowDetails(true);
-        setShowForm(false);
-    };
+    useEffect(() => {
+        fetchPrinters();
+      }, []);
+    
+      const fetchPrinters = async () => {
+        const token = localStorage.getItem('ACCESS_TOKEN'); // Retrieve the access token from local storage
+        try {
+          const response = await api.get('/spso/printer/printerActivity/', {
+            headers: {
+              Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyOTEyNzk3LCJpYXQiOjE3MzI5MDkxOTcsImp0aSI6IjNkZGIxNzVmNWQ3MzQ0N2ViN2M0Yzg2MjY3MDRhODk4IiwidXNlcl9pZCI6Mn0.3Ta3GBZoIPEpefsLJrtqyqFnSxouuIVyXOk1FYwDM4M'}` // Add the token to the Authorization header
+            }
+          });
+          setPrinters(response.data.printers);
+        } catch (error) {
+          console.error("There was an error fetching the printer data:", error);
+        }
+      };
 
-    const handleSubmit = (event) => {
+      const handlePrinterClick = async (printerId) => {
+        const token = localStorage.getItem('ACCESS_TOKEN'); // Retrieve the access token from local storage
+        // console.log("Printer ID:", printerId.id);
+        try {
+          const response = await api.post('/spso/printer/printerActivity/', { id: printerId.id }, {
+            headers: {
+              Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyOTEyNzk3LCJpYXQiOjE3MzI5MDkxOTcsImp0aSI6IjNkZGIxNzVmNWQ3MzQ0N2ViN2M0Yzg2MjY3MDRhODk4IiwidXNlcl9pZCI6Mn0.3Ta3GBZoIPEpefsLJrtqyqFnSxouuIVyXOk1FYwDM4M'}` // Add the token to the Authorization header
+            }
+          });
+        //   setPrinter(response.data.printer);
+        //   console.log("Response from API:", response.data.printer.id);
+        //   console.log("Printer details:", printer.id);
+          const printerInfo = {
+            name: `Máy in ${response.data.printer.id}`,
+            manufacturer: 'Hãng A',
+            type: response.data.printer.enable_type,
+            description: 'Mô tả máy in',
+            location: response.data.printer.location,
+            status: response.data.printer.enable_printing ? 'Kích hoạt' : 'Vô hiệu'
+          };
+          setPrinterDetails(printerInfo);
+          setShowDetails(true);
+          setShowForm(false);
+        } catch (error) {
+          console.error("There was an error fetching the printer details:", error);
+        }
+      };
+    
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("Thông tin máy in mới:", printerDetails);
+        const token = localStorage.getItem('ACCESS_TOKEN'); // Retrieve the access token from local storage
+        try {
+          const response = await api.post('/spso/printer/addPrinter/', printerDetails, {
+            headers: {
+              Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyOTEyNzk3LCJpYXQiOjE3MzI5MDkxOTcsImp0aSI6IjNkZGIxNzVmNWQ3MzQ0N2ViN2M0Yzg2MjY3MDRhODk4IiwidXNlcl9pZCI6Mn0.3Ta3GBZoIPEpefsLJrtqyqFnSxouuIVyXOk1FYwDM4M'}` // Add the token to the Authorization header
+            }
+          });
+          console.log("Response from API:", response.data);
+        } catch (error) {
+          console.error("There was an error submitting the printer details:", error);
+        }
         setShowForm(false);
-    };
+      };
 
     return (
         <div>
@@ -171,12 +216,12 @@ function Body() {
                 )}
 
                 <div className="printer-list">
-                    {Array.from({ length: 9 }, (_, i) => (
-                        <div key={i} className="printer-item">
-                            <img src="https://phucanhcdn.com/media/product/23196_may_in_canon_lbp6230dn_03.jpg" alt={`Máy in ${i + 1}`} className="mx-auto mb-2" />
-                            <button className="btn-primary" onClick={() => handlePrinterClick(i)}>Máy in {i + 1}</button>
-                        </div>
-                    ))}
+                {printers.map((printer) => (
+            <div key={printer.id} className="printer-item">
+              <img src="https://phucanhcdn.com/media/product/23196_may_in_canon_lbp6230dn_03.jpg" alt={`Máy in ${printer.id}`} className="mx-auto mb-2" />
+              <button className="btn-primary" onClick={() => handlePrinterClick(printer)}>Máy in {printer.id}</button>
+            </div>
+          ))}
                 </div>
             </main>
         </div>
