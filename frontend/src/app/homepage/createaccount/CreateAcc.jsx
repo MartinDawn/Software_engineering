@@ -1,8 +1,12 @@
 import React from 'react';
-import CreateAccount from '../../../views/CreateAccount/CreateAccount';
+import CreateAccount from '../../../components/CreateAccount';
+import Navbar from '../../../layouts/Navbar/Navbar';
 
 const CreateAccPage = () => {
-  return <CreateAccount />;
+  return <>
+  <Navbar />
+  <CreateAccount />
+  </>;
 };
 
 export default CreateAccPage;

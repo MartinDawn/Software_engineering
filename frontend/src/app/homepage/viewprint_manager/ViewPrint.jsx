@@ -1,5 +1,5 @@
 import React from "react";
-import ViewPrintingHistory from "../../../views/ViewPrintingHistory/ViewPrintingHistory";
+import ViewPrintingHistory from "../../../components/ViewPrintingHistory";
 
 function ViewPrintingPage() {
   return <ViewPrintingHistory />;

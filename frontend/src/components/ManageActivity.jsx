@@ -1,7 +1,7 @@
 import React from "react";
-import "./ManageActivity.css";
-import ViewPaymentButton from "../../app/buttons/ViewPaymentButton/ViewPay";
-import ViewPrintButton from "../../app/buttons/ViewPrintHistoryButton/ViewPrintButton";
+import "../styles/ManageActivity.css";
+import ViewPaymentButton from "../app/buttons/ViewPaymentButton/ViewPay";
+import ViewPrintButton from "../app/buttons/ViewPrintHistoryButton/ViewPrintButton";
 
 const ManageActivity = ({ isBuyingEnabled }) => {
   const statusClass = isBuyingEnabled ? "status on" : "status off";

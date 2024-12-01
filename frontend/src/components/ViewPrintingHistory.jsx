@@ -1,5 +1,5 @@
 import React from "react";
-import "./ViewPrintingHistory.css";
+import "../styles/ViewPrintingHistory.css";
 
 const ViewPrintingHistory = ({ printingData = [] }) => {
   

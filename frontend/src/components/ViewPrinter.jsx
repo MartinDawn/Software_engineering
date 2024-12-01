@@ -1,6 +1,6 @@
 import React from "react";
-import "./ViewPrinter.css";
-import ViewPrinterHistoryButton from "../../app/buttons/ViewPrinterHistoryButton/ViewPrinterHistoryButton";
+import "../styles/ViewPrinter.css";
+import ViewPrinterHistoryButton from "../app/buttons/ViewPrinterHistoryButton/ViewPrinterHistoryButton";
 
 const ViewPrinter = ({ printerData = [] }) => {
   

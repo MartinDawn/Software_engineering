@@ -1,0 +1,84 @@
+/* Container for the login form */
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  /* Header section of the login form */
+  .login-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Logo in the header */
+  .login-logo {
+    width: 100px;
+    margin-bottom: 10px;
+  }
+  
+  /* Form group for each input field */
+  .login-form .form-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Label for each input field */
+  .login-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  /* Input fields */
+  .login-form input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Error message */
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+  }
+  
+  /* Login button */
+  .login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .login-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Social login section */
+  .social-login {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /* Social icons container */
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  /* Individual social icon */
+  .social-icon {
+    font-size: 24px;
+    cursor: pointer;
+  }

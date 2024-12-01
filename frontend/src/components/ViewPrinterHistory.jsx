@@ -1,5 +1,5 @@
 import React from "react";
-import "./ViewPrinterHistory.css";
+import "../styles/ViewPrinterHistory.css";
 
 const ViewPrinterHistory = ({ historyData = [] }) => {
   

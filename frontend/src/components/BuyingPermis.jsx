@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './BuyingPermis.css'; 
+import '../styles/BuyingPermis.css'; 
 
 const BuyingPermis = () => {
   const [buyingPeriods, setBuyingPeriods] = useState([]);

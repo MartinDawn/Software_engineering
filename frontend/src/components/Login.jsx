@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import '../styles/Manage.css';
+import '../styles/Login.css'
 import logoBK from '../Image/logo_BK2-removebg.png';
 import api from '../api';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
@@ -64,14 +64,6 @@ const Login = () => {
         {error && <p className="error-message">{error}</p>}
         <button type="button" className="login-button" onClick={handleSubmit}>Login</button>
       </form>
-      <div className="social-login">
-        <p>Or login with:</p>
-        <div className="social-icons">
-          <FontAwesomeIcon icon={faFacebook} className="social-icon" />
-          <FontAwesomeIcon icon={faTwitter} className="social-icon" />
-          <FontAwesomeIcon icon={faInstagram} className="social-icon" />
-        </div>
-      </div>
     </div>
   );
 };

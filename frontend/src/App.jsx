@@ -14,22 +14,21 @@ import ViewPaymentPage from './app/homepage/viewpayment/ViewPay';
 import ViewPrintingHistory from './app/homepage/viewprint_manager/ViewPrint';
 import ViewPrinterPage from './app/homepage/viewprinter/PrinterPage';
 import ViewPrinterHistoryPage from './app/homepage/viewprinterhistory/ViewPrinterHis';
+import Login from "./components/Login";
 function App() {
   return (
     <BrowserRouter>
-      <div id="root">
-        <Navbar />
         <div className="main-content">
           <Routes>
-          <Route path="/login" element={<Login />} />
           <Route
             path="/"
             element={
-              <ProtectedRoute>
-                <Manage />
-              </ProtectedRoute>
+              <div id="root">
+              <Navbar />
+              </div>
             }
           />
+
             <Route path="/createaccount" element={<CreateAccPage />} />
             <Route path="/buyingpermis" element={<BuyPermisPage />} />
             <Route path="/manageactivity" element={<ManageActPage/>} />
@@ -40,10 +39,10 @@ function App() {
             <Route path="/manage" element={<Manage />} />
             <Route path="/printhistory" element={<PrintHistory />} />
             <Route path="/report" element={<Report />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </div>
         <Footer />
-      </div>
       </BrowserRouter>
   );
 }

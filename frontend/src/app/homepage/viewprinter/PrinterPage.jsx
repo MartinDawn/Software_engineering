@@ -1,8 +1,12 @@
 import React from "react";
-import ViewPrinter from "../../../views/ViewPrinter/ViewPrinter";
+import ViewPrinter from "../../../components/ViewPrinter";
+import Navbar from "../../../layouts/Navbar/Navbar";
 
 function ViewPrinterPage() {
-  return <ViewPrinter />;
+  return <>
+  <Navbar />
+  <ViewPrinter />
+  </>;
 }
 
 export default ViewPrinterPage;

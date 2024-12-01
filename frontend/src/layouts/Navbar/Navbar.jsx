@@ -32,7 +32,7 @@ const Navbar = () => {
         />
         {dropdownOpen && (
           <div className="dropdown-content">
-            <Link to="/account">Tài khoản</Link>
+            <Link to="/login">Tài khoản</Link>
             <Link to="/logout">Đăng xuất</Link>
           </div>
         )}
