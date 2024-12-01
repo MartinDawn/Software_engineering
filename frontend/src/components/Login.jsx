@@ -25,7 +25,14 @@ const Login = () => {
       localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
       // Handle successful login, e.g., store tokens, redirect, etc.
       console.log('Login successful:', response.data);
-      navigate('/manage');
+      const userRole = response.data.user.role;
+      if (userRole === 'manager') {
+        navigate('/manager');
+      } else if (userRole === 'SPSO') {
+        navigate('/SPSO');
+      } else {
+        navigate('/student');
+      }
     } catch (error) {
       setError('Invalid username or password');
       console.error('Login failed:', error);

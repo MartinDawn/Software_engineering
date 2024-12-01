@@ -15,6 +15,15 @@ import ViewPrintingHistory from './app/homepage/viewprint_manager/ViewPrint';
 import ViewPrinterPage from './app/homepage/viewprinter/PrinterPage';
 import ViewPrinterHistoryPage from './app/homepage/viewprinterhistory/ViewPrinterHis';
 import Login from "./components/Login";
+import Navbarhome from "./layouts/Navbar/Navbarhome";
+import Print from "./components/student-PrinterDocument";
+import PaymentHistory from "./components/student-payment-history";
+import PaperBuying from "./components/student-paperBuying";
+import SPrintHistory from "./components/student-history-print";
+import Navbarst from "./layouts/Navbar/NavSt";
+import NavbarMg from "./layouts/Navbar/NavMg";
+import Logout from "./components/Logout";
+
 function App() {
   return (
     <BrowserRouter>
@@ -24,7 +33,7 @@ function App() {
             path="/"
             element={
               <div id="root">
-              <Navbar />
+              <Navbarhome/>
               </div>
             }
           />
@@ -40,6 +49,14 @@ function App() {
             <Route path="/printhistory" element={<PrintHistory />} />
             <Route path="/report" element={<Report />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/student-PrintDocument" element={<Print/>} />
+            <Route path="/sprintHistory" element={<SPrintHistory/>} />
+            <Route path="/paymentHistory" element={<PaymentHistory/>} />
+            <Route path="/paperBuying" element={<PaperBuying/>} />
+            <Route path="/student" element={<Navbarst/>} />
+            <Route path="/manager" element={<Navbar/>} />
+            <Route path="/SPSO" element={<NavbarMg/>} />
+            <Route path="/logout" element={<Logout />} />
           </Routes>
         </div>
         <Footer />

@@ -10,8 +10,9 @@ import { Facebook, Twitter, Instagram } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
+import Navbarst from '../layouts/Navbar/NavSt';
 
-const PrintHistory = () => {
+const SPrintHistory = () => {
   const [studentData, setStudentData] = useState(null);
   const [printHistory, setPrintHistory] = useState([]);
   const mockStudentData = { //dữ liệu mẫu để test, test thì bỏ đi
@@ -121,42 +122,8 @@ const PrintHistory = () => {
   return (
     <>
       {/* Navbar - Fixed at top */}
-      <Navbar 
-        style={{ 
-          backgroundColor: '#E8E8E8',
-          position: 'fixed',
-          width: '100%',
-          top: 0,
-          zIndex: 1000,
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-        }}
-        expand="lg"
-      >
-        <Container>
-          <Navbar.Brand href="#">BK Printer</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="#">In tài liệu</Nav.Link>
-              <Nav.Link href="#" className="bg-secondary text-white">Lịch sử in</Nav.Link>
-              <Nav.Link href="#">Lịch sử thanh toán</Nav.Link>
-              <Nav.Link href="#">Mua trang in</Nav.Link>
-            </Nav>
-            <div className="d-flex align-items-center">
-              <span className="me-3">Số giấy còn lại: {studentData?.availablePages || 0}</span>
-              <Dropdown>
-                <Dropdown.Toggle variant="outline-secondary">
-                  <FontAwesomeIcon icon={faUser} /> {studentData?.username || 'User'}
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#">Thông tin</Dropdown.Item>
-                  <Dropdown.Item href="#">Đăng xuất</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+       {/* Navbar with light gray background */}
+       <Navbarst />
 
       {/* Main Content */}
       <div style={{ 
@@ -199,43 +166,8 @@ const PrintHistory = () => {
           </div>
         </Container>
       </div>
-
-      {/* Footer */}
-      <footer 
-        style={{ 
-          backgroundColor: '#E8E8E8',
-          position: 'fixed',
-          bottom: 0,
-          width: '100%',
-          zIndex: 1000,
-          boxShadow: '0 -2px 4px rgba(0,0,0,0.1)'
-        }}
-        className="py-4"
-      >
-        <Container>
-          <div className="row align-items-center">
-            <div className="col-md-8 text-center text-md-start">
-              <small className="text-muted">
-                Địa chỉ: 268 Lý Thường Kiệt, Phường 14, Quận 10, Hồ Chí Minh
-              </small>
-            </div>
-            <div className="col-md-4 text-center text-md-end mt-3 mt-md-0">
-              <span className="text-muted me-2">Liên Hệ</span>
-              <button className="btn btn-link text-dark p-1">
-                <Facebook size={20} />
-              </button>
-              <button className="btn btn-link text-dark p-1">
-                <Twitter size={20} />
-              </button>
-              <button className="btn btn-link text-dark p-1">
-                <Instagram size={20} />
-              </button>
-            </div>
-          </div>
-        </Container>
-      </footer>
     </>
   )
 }
 
-export default PrintHistory;
+export default SPrintHistory;

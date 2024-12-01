@@ -3,32 +3,11 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/PrintHis.css';
 import logoBK from '../Image/logo_BK2-removebg.png';
+import NavbarMg from '../layouts/Navbar/NavMg';
 
 function Header() {
     return (
-        <div className="tt-navbar">
-            <div className="tt-logo-SPSS">
-                <span>
-                    <img src={logoBK} alt="Logo đh BK" /> 
-                </span>
-                <span className="tt-SPSS">SPSS</span>
-            </div>
-            <ul className="tt-nav-links">
-                <li><a href="/" className="tt-active">Trang chủ</a></li>
-                <li><a href="/manage">Quản Lý</a></li>
-                <li><a href="/printhistory">Lịch sử hệ thống</a></li>
-                <li><a href="/report">Báo Cáo</a></li>
-            </ul>
-            <div className="tt-notification">
-                <span className="tt-iconbell">🔔</span>
-                <span className="notification-badge">3</span>
-            </div>
-            <div className="tt-user">
-                <span className="tt-iconuser">👤</span>
-                <span>SPSO</span>
-                <span className="tt-angledown">▼</span>
-            </div>
-        </div>
+        <NavbarMg />
     );
 }
 
@@ -130,34 +109,12 @@ function PrintHistoryFilter() {
     );
 }
 
-function Footer() {
-    return (
-        <footer className="footer">
-            <div className="footer-left d-flex align-items-center">
-                <img src={logoBK} alt="HCMUT logo" />
-                <span className="info">HCMUT</span>
-            </div>
-            <div className="footer-center">
-                <div className="info"><span>DANH MỤC</span></div>
-                <div className="info">Báo cáo</div>
-                <div className="info">Quản lý</div>
-                <div className="info">Lịch sử dịch vụ</div>
-            </div>
-            <div className="footer-right">
-                <div className="info"><span>LIÊN HỆ</span></div>
-                <div className="info">268 Lý Thường Kiệt, phường 14, quận 10, TP.HCM</div>
-                <div className="info">(028) 38 651 670 - (028) 38 647 256 (Ext: 5258, 5234)</div>
-            </div>
-        </footer>
-    );
-}
 
 function PrintHistory() {
     return (
         <>
             <Header />
             <PrintHistoryFilter />
-            <Footer />
         </>
     );
 }

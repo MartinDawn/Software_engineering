@@ -5,7 +5,7 @@ import user from '../../../public/user.png';
 import arrowDown from '../../../public/arrow-down.svg'; 
 import arrowUp from '../../../public/arrow-up.svg';
 
-const Navbar = () => {
+const Navbarst = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -14,15 +14,17 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <Link to="/manager" className="logo">BK Printer</Link>
+      <Link to="/student" className="logo">BK Printer</Link>
       <div className="menu">
-        <Link to="/manager">Trang chủ</Link>
-        <Link to="/createaccount">Tài khoản sinh viên</Link>
-        <Link to="/manageactivity">Quản lý sinh viên</Link>
-        <Link to="/buyingpermis">Quản lý mua giấy</Link>
-        <Link to="/viewprinter">Quản lý máy in </Link>
+        <Link to="/student">Trang chủ</Link>
+        <Link to="/student-PrintDocument" >In tài liệu</Link>
+        <Link to="/sprintHistory">Lịch sử in</Link>
+        <Link to="/paymentHistory">Lịch sử thanh toán</Link>
+        <Link to="/paperBuying">Mua trang in</Link>
       </div>
+
       <div className="user-info">
+      <span className="me-3">Số giấy còn lại: 50</span>
         <img src={user} alt="User" className="user-logo" onClick={toggleDropdown} />
         <img
           src={dropdownOpen ? arrowUp : arrowDown}
@@ -41,4 +43,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbarst;

@@ -3,32 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import '../styles/Report.css';
 import logoBK from '../Image/logo_BK2-removebg.png';
+import NavbarMg from '../layouts/Navbar/NavMg';
 
 function Header() {
     return (
-        <div className="tt-navbar">
-            <div className="tt-logo-SPSS">
-                <span>
-                    <img src={logoBK} alt="Logo đh BK" /> 
-                </span>
-                <span className="tt-SPSS">SPSS</span>
-            </div>
-            <ul className="tt-nav-links">
-                <li><a href="/" className={({ isActive }) => isActive ? 'tt-active' : 'tt-noactive'}>Trang chủ</a></li>
-                <li><a href="/SPSO/manage" className={({ isActive }) => isActive ? 'tt-active' : 'tt-noactive'} >Quản Lý</a></li>
-                <li><a href="/printhistory" className={({ isActive }) => isActive ? 'tt-active' : 'tt-noactive'}>Lịch sử hệ thống</a></li>
-                <li><a href="/report" className={({ isActive }) => isActive ? 'tt-active' : 'tt-noactive'}>Báo Cáo</a></li>
-            </ul>
-            <div className="tt-notification">
-                <span className="tt-iconbell">🔔</span>
-                <span className="notification-badge">3</span>
-            </div>
-            <div className="tt-user">
-                <span className="tt-iconuser">👤</span>
-                <span>SPSO</span>
-                <span className="tt-angledown">▼</span>
-            </div>
-        </div>
+      <NavbarMg />
     );
 }
 
@@ -125,34 +104,12 @@ function Body() {
     );
 }
 
-function Footer() {
-    return (
-        <footer className="footer">
-            <div className="footer-left d-flex align-items-center">
-                <img src={logoBK} alt="HCMUT logo" />
-                <span className="info">HCMUT</span>
-            </div>
-            <div className="footer-center">
-                <div className="info"><span>DANH MỤC</span></div>
-                <div className="info">Báo cáo</div>
-                <div className="info">Quản lý</div>
-                <div className="info">Lịch sử dịch vụ</div>
-            </div>
-            <div className="footer-right">
-                <div className="info"><span>LIÊN HỆ</span></div>
-                <div className="info">268 Lý Thường Kiệt, phường 14, quận 10, TP.HCM</div>
-                <div className="info">(028) 38 651 670 - (028) 38 647 256 (Ext: 5258, 5234)</div>
-            </div>
-        </footer>
-    );
-}
 
 function Report() {
     return (
         <>
             <Header />
             <Body />
-            <Footer />
         </>
     );
 }
