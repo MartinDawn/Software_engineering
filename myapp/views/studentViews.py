@@ -32,7 +32,7 @@ class BuyPaperView(APIView):
         if total_cost != cost:
             return Response({"message": "Số tiền không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
         user = User.objects.get(id=user_id)
-        if not user.buying_enabled:
+        if not user.is_able_buying:
                 return Response({"message": "Giao dịch mua giấy hiện không khả dụng"}, status=status.HTTP_400_BAD_REQUEST)
         
         try:
@@ -58,17 +58,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from ..models import Print_history, User, Printer, Paper
-from rest_framework_simplejwt.authentication import JWTAuthentication
 import ast
 class PrintDocumentView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        jwt_authenticator = JWTAuthentication()
-        header = jwt_authenticator.get_header(request)
-        raw_token = jwt_authenticator.get_raw_token(header)
-        validated_token = jwt_authenticator.get_validated_token(raw_token)
-        student_id = validated_token['user_id']  # Extract the user ID from the token
+        student_id = request.data.get('student_id')
         file_name = request.data.get('file_name')
         file_size = request.data.get('file_size')
         number_of_pages = request.data.get('number_of_pages')

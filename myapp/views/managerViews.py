@@ -13,7 +13,7 @@ class SetEnableBuyingView(APIView):
     permission_classes = [IsAuthenticated]
 
     def setEnable(self):
-        User.objects.all().update(buying_enabled=True)
+        User.objects.all().update(is_able_buying=True)
 
     def post(self, request):
         requested_time_str = request.data.get('datetime')
@@ -50,7 +50,7 @@ class SetDisableBuyingView(APIView):
     permission_classes = [IsAuthenticated]
 
     def setEnable(self):
-        User.objects.all().update(buying_enabled=False)
+        User.objects.all().update(is_able_buying=False)
 
     def post(self, request):
         requested_time_str = request.data.get('datetime')
@@ -94,7 +94,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password', 'full_name', 'role', 'availablePages',\
-                  'buying_enabled', 'major', 'enrollment_year', 'working_location', 'department_name')
+                  'is_able_buying', 'major', 'enrollment_year', 'working_location', 'department_name')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):

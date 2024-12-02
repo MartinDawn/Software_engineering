@@ -31,7 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     availablePages= models.IntegerField(default=0)
     major= models.CharField(max_length=255,default='')
     enrollment_year=models.DateField(default='2024-01-01')
-    buying_enabled = models.BooleanField(default=False)
+    is_able_buying = models.BooleanField(default=False)
 
     # SPSO
     working_location=models.CharField(max_length=255,default='')
@@ -70,7 +70,14 @@ class Printer(models.Model):
 
 class Paper(models.Model):
     type= models.CharField(max_length=255,default='')
+    costPerPaper=models.IntegerField(default=0)
     page= models.IntegerField(default=1)
     class Meta:
         db_table = 'Paper'
 
+class report(models.Model):
+    totalPaperBuying=models.IntegerField(default=0)
+    totalPaperPrinting=models.IntegerField(default=0)
+    datetime= models.DateField(default='2024-01-01')
+    class Meta: 
+        db_table = 'Report'

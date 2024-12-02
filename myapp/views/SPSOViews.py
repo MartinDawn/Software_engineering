@@ -140,7 +140,7 @@ class ViewStudentActivity(APIView):
                 "enrollment_year": student.enrollment_year,
                 "working_location": student.working_location,
                 "department_name": student.department_name,
-                "buying_enabled": student.buying_enabled,
+                "is_able_buying": student.is_able_buying,
                 "payment_history": list(payment_history.values()),
                 "print_history": list(print_history.values())
             }
