@@ -17,13 +17,15 @@ import {
   Image,
 } from 'react-bootstrap';
 import Navbarst from '../layouts/Navbar/NavSt';
+import api from '../api';
+import { jwtDecode } from 'jwt-decode';
 
 const Print = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [selectedPrinter, setSelectedPrinter] = useState(null);
   
-  // Dữ liệu mẫu cho danh sách máy in
+  //Dữ liệu mẫu cho danh sách máy in
   const printerList = [
     {
       id: "1",
@@ -47,21 +49,17 @@ const Print = () => {
 
   // Fetch printer list when component mounts
   // bỏ comment này đi khi test
-  /* useEffect(() => {
+   useEffect(() => {
     const fetchPrinters = async () => {
+      const token = localStorage.getItem('ACCESS_TOKEN'); // Retrieve the access token from local storage
+      console.log('Token:', token);
       try {
-        const response = await fetch('/spso/printer/list/', {
-          method: 'GET',
+        const response = await api.get('/spso/printer/printerActivity/', {
           headers: {
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}` // Add the token to the Authorization header
           }
         });
-        
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        
-        const data = await response.json();
+        const data = response.data.printers;
         setPrinters(data);
       } catch (error) {
         console.error('Error fetching printer list:', error);
@@ -71,7 +69,7 @@ const Print = () => {
     };
 
     fetchPrinters();
-  }, []); */
+  }, []); 
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
@@ -115,38 +113,40 @@ const Print = () => {
           const pdfDoc = await PDFDocument.load(arrayBuffer);
           numberOfPages = pdfDoc.getPageCount();
         }
-
+        const token = localStorage.getItem('ACCESS_TOKEN'); 
         // Chuẩn bị dữ liệu để gửi
         const printData = {
-          student_id: 1, 
           file_name: selectedFile.name,
           file_size: selectedFile.size,
           number_of_pages: numberOfPages,
           printer_id: parseInt(selectedPrinter.id),
           page_type: "A3",
-          document_type: getFileExtension(selectedFile.name)
+          document_type:"docx"
         };
-
+        console.log('Print data:', printData);
         // Gọi API để in ( test postman ở đây)
-        const response = await fetch('http://127.0.0.1:8000/spso/printer/printDocument/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(printData)
-        });
+  
+        try {
+          const response = await api.post('/student/printdocument/', printData, {
+            headers: {
+              Authorization: `Bearer ${token}` // Add the token to the Authorization header
+            }
+          });
+          const data = response.data;
+          console.log('Print response:', data);
 
-        const data = await response.json();
-        alert(data.message);
+          if (data.message === "Document printed successfully") {
+            setSelectedFile(null);
+            setSelectedPrinter(null); 
+          }
 
-        if (data.message === "Document printed successfully") {
-          setSelectedFile(null);
-          setSelectedPrinter(null); 
+        } catch (error) {
+          console.error('Error printing:', error);
+          alert('Có lỗi xảy ra khi in tài liệu. Vui lòng thử lại!');
         }
-
       } catch (error) {
-        console.error('Error printing:', error);
-        alert('Có lỗi xảy ra khi in tài liệu. Vui lòng thử lại!');
+        console.error('Error preparing print data:', error);
+        alert('Có lỗi xảy ra khi chuẩn bị dữ liệu in. Vui lòng thử lại!');
       }
     } else {
       alert('Vui lòng chọn tài liệu và máy in');

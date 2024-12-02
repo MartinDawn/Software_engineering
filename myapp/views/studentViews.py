@@ -58,13 +58,17 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from ..models import Print_history, User, Printer, Paper
+from rest_framework_simplejwt.authentication import JWTAuthentication
 import ast
 class PrintDocumentView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        user = request.user
-        student_id = user.id  # Extract the student ID from the JWT token
+        jwt_authenticator = JWTAuthentication()
+        header = jwt_authenticator.get_header(request)
+        raw_token = jwt_authenticator.get_raw_token(header)
+        validated_token = jwt_authenticator.get_validated_token(raw_token)
+        student_id = validated_token['user_id']  # Extract the user ID from the token
         file_name = request.data.get('file_name')
         file_size = request.data.get('file_size')
         number_of_pages = request.data.get('number_of_pages')
