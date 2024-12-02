@@ -10,6 +10,7 @@ from .views.SPSOViews import AddPrinterView, EnablePrinter, DisablePrinter, Dele
                             ViewStudentActivity, ViewPrinterActivity, EnableFileType,EnableFileTypeForAllPrinter,\
                             ChangeDefaultPage, CreatePaperView
 from .views.studentViews import BuyPaperView, PrintDocumentView
+from .views.reportView import MonthlyReportView
 urlpatterns = [
     path('api/token/',TokenObtainPairView.as_view(),name='token_obtain_pair'),
     path('api/token/refresh/',TokenRefreshSlidingView.as_view(),name='token_refresh'),
@@ -39,6 +40,7 @@ urlpatterns = [
     # ----------------------------------------------------------------------------
     # student api
     path('student/buypaper/',BuyPaperView.as_view()),
-    path('student/printdocument/',PrintDocumentView.as_view())
+    path('student/printdocument/',PrintDocumentView.as_view()),
     
+    path('spso/viewReport/',MonthlyReportView.as_view()),
 ]

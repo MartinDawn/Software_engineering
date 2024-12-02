@@ -75,3 +75,9 @@ class Paper(models.Model):
     class Meta:
         db_table = 'Paper'
 
+class report(models.Model):
+    totalPaperBuying=models.IntegerField(default=0)
+    totalPaperPrinting=models.IntegerField(default=0)
+    datetime= models.DateField(default='2024-01-01')
+    class Meta: 
+        db_table = 'Report'
