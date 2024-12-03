@@ -121,7 +121,7 @@ const Print = () => {
           number_of_pages: numberOfPages,
           printer_id: parseInt(selectedPrinter.id),
           page_type: "A3",
-          document_type:"docx"
+          document_type:"pdf",
         };
         console.log('Print data:', printData);
         // Gọi API để in ( test postman ở đây)

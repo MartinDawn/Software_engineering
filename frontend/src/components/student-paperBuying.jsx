@@ -16,6 +16,7 @@ import { faUser, faPhone, faMapMarkerAlt, faEnvelope } from '@fortawesome/free-s
 import Logo from '../Image/logohcmut.png'
 import bg from '../Image/a4.png'
 import Navbarst from '../layouts/Navbar/NavSt';
+import api from '../api';
 
 const PaperBuying = () => {
   const [quantity, setQuantity] = useState(1);
@@ -32,21 +33,19 @@ const PaperBuying = () => {
     }
   };
 
-  const handlePurchase = async () => {// test postman ở đây
+  const handlePurchase = async () => {
     try {
-      const response = await fetch('/student/buypaper/', {
-        method: 'POST',
+      const token = localStorage.getItem('ACCESS_TOKEN'); // Retrieve the access token from local storage
+      const response = await api.post('/student/buypaper/', {
+        quantity: quantity,
+        cost: quantity * 300
+      }, {
         headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          quantity: quantity,
-          user_id: 1,
-          cost: quantity * 300
-        })
+          'Authorization': `Bearer ${token}` // Add the token to the Authorization header
+        }
       });
 
-      const data = await response.json();
+      const data = response.data;
       setMessage(data.message);
       setShowModal(true);
 
@@ -56,6 +55,7 @@ const PaperBuying = () => {
       setShowModal(true);
     }
   };
+
 
   const handleCloseModal = () => {
     setShowModal(false);

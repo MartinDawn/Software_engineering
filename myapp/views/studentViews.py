@@ -7,6 +7,7 @@ from rest_framework import serializers
 from ..models import Paper, Payment_history
 from datetime import datetime
 from django.utils import timezone
+from rest_framework_simplejwt.authentication import JWTAuthentication
 # --------------------Thanh toán---------------------------------
 class PaperSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,7 +24,11 @@ class BuyPaperView(APIView):
 
     def post(self, request):
         quantity = request.data.get('quantity', 1)
-        user_id = request.data.get('user_id')
+        jwt_authenticator = JWTAuthentication()
+        header = jwt_authenticator.get_header(request)
+        raw_token = jwt_authenticator.get_raw_token(header)
+        validated_token = jwt_authenticator.get_validated_token(raw_token)
+        user_id = validated_token['user_id']
         cost = request.data.get('cost')
 
         if  not user_id:
@@ -51,6 +56,32 @@ class BuyPaperView(APIView):
             return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
         except Exception as error:
             return Response({"message": str(error)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    def get(self, request):
+        jwt_authenticator = JWTAuthentication()
+        header = jwt_authenticator.get_header(request)
+        raw_token = jwt_authenticator.get_raw_token(header)
+        validated_token = jwt_authenticator.get_validated_token(raw_token)
+        student_id = validated_token['user_id']
+        if not student_id:
+            return Response({"message": "Student ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            print(f"Student ID: {student_id}")
+            student = User.objects.get(id=student_id, role="student")
+            payment_histories = Payment_history.objects.filter(owner_id=student_id)
+            return Response({
+                "payment_histories": [{
+                    "id": payment_history.id,
+                    "amount": payment_history.amount,
+                    "payment_date": payment_history.payment_date,
+                    "payment_method": payment_history.payment_method,
+                    "description": payment_history.description
+                } for payment_history in payment_histories]
+            }, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"message": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as error:
+            return Response({"message": str(error)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 # ----------------------In----------------------------------------
 
 from rest_framework.views import APIView
@@ -58,12 +89,17 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from ..models import Print_history, User, Printer, Paper
+from rest_framework_simplejwt.authentication import JWTAuthentication
 import ast
 class PrintDocumentView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        student_id = request.data.get('student_id')
+        jwt_authenticator = JWTAuthentication()
+        header = jwt_authenticator.get_header(request)
+        raw_token = jwt_authenticator.get_raw_token(header)
+        validated_token = jwt_authenticator.get_validated_token(raw_token)
+        student_id = validated_token['user_id']  # Extract the user ID from the token
         file_name = request.data.get('file_name')
         file_size = request.data.get('file_size')
         number_of_pages = request.data.get('number_of_pages')
@@ -83,7 +119,13 @@ class PrintDocumentView(APIView):
                 return Response({"message": "Máy in không sử dụng được"}, status=status.HTTP_400_BAD_REQUEST)
             if student.availablePages < number_of_pages*rate:
                 return Response({"message": "Học sinh không có đủ giấy in"}, status=status.HTTP_400_BAD_REQUEST)
-            enabled_types = ast.literal_eval(printer.enable_type) 
+            print(f"Enabled types (raw): {printer.enable_type}")
+
+            try:
+                enabled_types = printer.enable_type.split(',')  # Assuming enable_type is a comma-separated string
+                enabled_types = [type.strip() for type in enabled_types]  # Strip any extra whitespace
+            except (ValueError, SyntaxError) as e:
+                return Response({"message": f"Error parsing enabled types: {e}"}, status=status.HTTP_400_BAD_REQUEST)
             print(f"Document type: {document_type}") 
             print(f"Enabled types: {enabled_types}")
             if document_type not in [type.strip() for type in enabled_types]: 
@@ -121,4 +163,34 @@ class PrintDocumentView(APIView):
             return Response({"message": "Printer not found"}, status=status.HTTP_404_NOT_FOUND)
         except Exception as error:
             return Response({"message": str(error)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    def get(self, request):
+        jwt_authenticator = JWTAuthentication()
+        header = jwt_authenticator.get_header(request)
+        raw_token = jwt_authenticator.get_raw_token(header)
+        validated_token = jwt_authenticator.get_validated_token(raw_token)
+        student_id = validated_token['user_id']
+        if not student_id:
+            return Response({"message": "Student ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            print(f"Student ID: {student_id}")
+            student = User.objects.get(id=student_id, role="student")
+            print_histories = Print_history.objects.filter(owner_id=student_id)
+            return Response({
+                "print_histories": [{
+                    "id": print_history.id,
+                    "file_name": print_history.file_name,
+                    "file_size": print_history.file_size,
+                    "numberOfPages": print_history.numberOfPages,
+                    "printerId": print_history.printerId,
+                    "timestamp": print_history.datetime
+                } for print_history in print_histories]
+            }, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"message": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as error:
+            return Response({"message": str(error)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    
+        
 

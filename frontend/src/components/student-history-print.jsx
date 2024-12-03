@@ -1,20 +1,26 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { 
-  Navbar, 
-  Nav, 
+import {  
   Container, 
-  Dropdown,
 } from 'react-bootstrap';
-import { Facebook, Twitter, Instagram } from 'lucide-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import Navbarst from '../layouts/Navbar/NavSt';
+import api from '../api';
 
 const SPrintHistory = () => {
   const [studentData, setStudentData] = useState(null);
   const [printHistory, setPrintHistory] = useState([]);
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
   const mockStudentData = { //dữ liệu mẫu để test, test thì bỏ đi
     id: 3,
     username: "Doan Ngoc Hoang son",
@@ -75,24 +81,20 @@ const SPrintHistory = () => {
       }
     ]
   };
-  /*useEffect(() => { // fetch data thì bỏ cái comment này
+  useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await fetch('/spso/printer/studentActivity/', {
-          method: 'POST',
+        const token = localStorage.getItem('ACCESS_TOKEN'); // Retrieve the access token from local storage
+        const response = await api.get('/student/printhistory/', {
           headers: {
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`, // Add the token to the Authorization header
           },
-          body: JSON.stringify({
-            "id": "3"  // Hard-coded ID for now
-          })
         });
-        
-        const data = await response.json();
-        setStudentData(data.student);
-        
-        if (data.student && data.student.print_history) {
-          setPrintHistory(data.student.print_history);
+
+        const data = response.data;
+
+        if (data.print_histories) {
+          setPrintHistory(data.print_histories);
         }
       } catch (error) {
         console.error('Error fetching student data:', error);
@@ -100,13 +102,14 @@ const SPrintHistory = () => {
     };
 
     fetchStudentData();
-  }, []);*/
+  }, []);
+  /*
   useEffect(() => {
     // Giả lập việc load dữ liệu, test thì bỏ đi
     setStudentData(mockStudentData);
     setPrintHistory(mockStudentData.print_history);
   }, []);
-
+*/
   const formatDateTime = (dateTimeStr) => {
     return new Date(dateTimeStr).toLocaleString('vi-VN');
   };
@@ -157,7 +160,7 @@ const SPrintHistory = () => {
                       <td className="p-3">{formatFileSize(record.file_size)}</td>
                       <td className="p-3">{record.numberOfPages}</td>
                       <td className="p-3">{record.printerId}</td>
-                      <td className="p-3">{formatDateTime(record.datetime)}</td>
+                      <td className="p-3">{formatTimestamp(record.timestamp)}</td>
                     </tr>
                   ))}
                 </tbody>

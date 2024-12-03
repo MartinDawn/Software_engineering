@@ -41,6 +41,7 @@ urlpatterns = [
     # student api
     path('student/buypaper/',BuyPaperView.as_view()),
     path('student/printdocument/',PrintDocumentView.as_view()),
+    path('student/printhistory/',PrintDocumentView.as_view()),
     
     path('spso/viewReport/',MonthlyReportView.as_view()),
 ]

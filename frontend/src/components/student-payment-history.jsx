@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import Navbarst from '../layouts/Navbar/NavSt';
+import api from '../api';
 
 const PaymentHistory = () => {
   const [studentData, setStudentData] = useState(null);
@@ -46,24 +47,20 @@ const PaymentHistory = () => {
     ]
   };
 
-  /*useEffect(() => { // fetch data thì bỏ cái comment này, comment lại dữ liệu mẫu
+  useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await fetch('/spso/printer/studentActivity/', {
-          method: 'POST',
+        const token = localStorage.getItem('ACCESS_TOKEN'); // Retrieve the access token from local storage
+        const response = await api.get('/student/buypaper/', {
           headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            "id": "3"  // Hard-coded ID for now
-          })
+            'Authorization': `Bearer ${token}` // Add the token to the Authorization header
+          }
         });
-        
-        const data = await response.json();
-        setStudentData(data.student);
-        
-        if (data.student && data.student.payment_history) {
-          setPaymentHistory(data.student.payment_history);
+
+        const data = response.data;
+        // console.log('Student data:', data.payment_histories);
+        if (data.payment_histories) {
+          setPaymentHistory(data.student.payment_histories);
         }
       } catch (error) {
         console.error('Error fetching student data:', error);
@@ -71,13 +68,13 @@ const PaymentHistory = () => {
     };
 
     fetchStudentData();
-  }, []);*/
-
-  useEffect(() => {// test postman thì  bỏ đi
-    // Giả lập việc load dữ liệu
-    setStudentData(mockStudentData);
-    setPaymentHistory(mockStudentData.payment_history);
   }, []);
+
+  // useEffect(() => {// test postman thì  bỏ đi
+  //   // Giả lập việc load dữ liệu
+  //   setStudentData(mockStudentData);
+  //   setPaymentHistory(mockStudentData.payment_history);
+  // }, []);
 
   const formatDateTime = (dateTimeStr) => {
     return new Date(dateTimeStr).toLocaleString('vi-VN');
