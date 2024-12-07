@@ -3,7 +3,6 @@ import "../styles/ViewPrinter.css";
 import ViewPrinterHistoryButton from "../app/buttons/ViewPrinterHistoryButton/ViewPrinterHistoryButton";
 
 const ViewPrinter = ({ printerData = [] }) => {
-  
   const exampleData = [
     {
       printerId: "09",
@@ -18,7 +17,7 @@ const ViewPrinter = ({ printerData = [] }) => {
       location: "Main Office",
     },
   ];
-
+  
   
   const dataToDisplay = printerData.length > 0 ? printerData : exampleData;
 

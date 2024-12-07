@@ -2,13 +2,20 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./ViewPrinterHistoryButton.css";
 
-const ViewPrinterHistoryButton = () => {
+const ViewPrinterHistoryButton = ({ printerHistory }) => {
   const navigate = useNavigate();
+
+  const handleClick = () => {
+    console.log(printerHistory);
+    navigate("/viewprinterhistory", {
+      state: { printerHistory }
+    });
+  };
 
   return (
     <button
       className="view-printer-history-button"
-      onClick={() => navigate("/viewprinterhistory")}
+      onClick={handleClick}
     >
       View Print History
     </button>

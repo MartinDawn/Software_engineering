@@ -1,24 +1,10 @@
 import React from "react";
 import "../styles/ViewPayment.css";
+import { useLocation } from "react-router-dom";
 
 const ViewPayment = () => {
-  
-  const paymentHistory = [
-    {
-      paymentId: 12345,
-      paymentDate: "30/11/2024",
-      paperType: "A4",
-      numberOfPages: 4,
-      pricePerPage: 200, 
-    },
-    {
-      paymentId: 12346,
-      paymentDate: "30/11/2024",
-      paperType: "A3",
-      numberOfPages: 15,
-      pricePerPage: 400, 
-    },
-  ];
+  const location = useLocation();
+  const { paymentHistory } = location.state || [];
 
   return (
     <div className="view-payment-container">

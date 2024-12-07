@@ -1,11 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import '../styles/Manage.css';
 import { useState, useEffect } from 'react';
-import logoBK from '../Image/logo_BK2-removebg.png';
 import api from '../api';
 import NavbarMg from '../layouts/Navbar/NavMg';
+import { setLineJoin } from 'pdf-lib';
+import ViewPrinterHistoryButton from '../app/buttons/ViewPrinterHistoryButton/ViewPrinterHistoryButton';
 function Header() {
     return (
         <NavbarMg />
@@ -61,6 +59,7 @@ function Body() {
       };
 
       const handlePrinterClick = async (printerId) => {
+        console.log("Printer ID:", printerId);
         const token = localStorage.getItem('ACCESS_TOKEN'); // Retrieve the access token from local storage
         // console.log("Printer ID:", printerId.id);
         try {
@@ -73,7 +72,7 @@ function Body() {
           console.log("Response from API:", response.data.printer.id);
         //   console.log("Printer details:", printer.id);
           const printerInfo = {
-            name: `Máy in ${response.data.printer.id}`,
+            name: response.data.printer.id,
             manufacturer: 'Hãng A',
             type: response.data.printer.enable_type,
             description: 'Mô tả máy in',
@@ -87,6 +86,68 @@ function Body() {
           console.error("There was an error fetching the printer details:", error);
         }
       };
+
+      const handleEnablePrinting = async (printerId) => {
+        try {
+          const response = await api.post('/spso/printer/enablePrinting/', {
+            id: printerId
+          }, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`, // Add the token to the Authorization header
+            }
+          });
+    
+          if (response.status === 200) {
+            alert('Máy in đã được kích hoạt thành công');
+          } else {
+            alert('Có lỗi xảy ra khi kích hoạt máy in');
+          }
+        } catch (error) {
+          console.error('Error enabling printer:', error);
+          alert('Có lỗi xảy ra khi kích hoạt máy in');
+        }
+      };
+
+      const handleDisablePrinting = async (printerId) => {
+        try {
+          const response = await api.post('/spso/printer/disablePrinting/', {
+            id: printerId
+          }, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
+            }
+          });
+          if (response.status === 200) {
+            alert('Máy in đã được vô hiệu hoá');
+          } else {
+            alert('Có lỗi xảy ra khi kích hoạt máy in');
+          }
+        } catch (error) {
+          console.error('Error enabling printer:', error);
+          alert('Có lỗi xảy ra khi kích hoạt máy in');
+        }
+      };
+
+      const handleDeletePrinter = async (printerId) => {
+        console.log("Printer ID:", printerId);
+        try {
+          const response = await api.delete(`/spso/printer/deletePrinting/${printerId}/`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
+            }
+          });
+          if (response.status === 200) {
+            alert('Máy in đã được xóa');
+          } else {
+            alert('Có lỗi xảy ra khi xóa máy in');
+          }
+        } catch (error) {
+          console.error('Error deleting printer:', error);
+          alert('Có lỗi xảy ra khi xóa máy in');
+        }
+      };
+
+
     
 
     const handleSubmit = async (event) => {
@@ -161,12 +222,13 @@ function Body() {
                         <h2>Thông tin máy in</h2>
                         <p><strong>Tên máy in:</strong> {showPrinter.name}</p>
                         <p><strong>Hãng sản xuất:</strong> {showPrinter.manufacturer}</p>
-                        <p><strong>Loại máy:</strong> {showPrinter.type}</p>
+                        <p><strong>Loại tài liệu cho phép:</strong> {showPrinter.type}</p>
                         <p><strong>Mô tả:</strong> {showPrinter.description}</p>
                         <p><strong>Cơ sở:</strong> {showPrinter.location}</p>
                         <p><strong>Trạng thái:</strong> {showPrinter.status}</p>
-                        <button className="btn-activate" onClick={() => alert('Kích hoạt máy in')}>Kích hoạt</button>
-                        <button className="btn-disable" onClick={() => alert('Vô hiệu hóa máy in')}>Vô hiệu hóa</button>
+                        <button className="btn-activate" onClick={() => handleEnablePrinting(showPrinter.name)}>Kích hoạt</button>
+                        <button className="btn-disable" onClick={() => handleDisablePrinting(showPrinter.name)}>Vô hiệu hóa</button>
+                        <button className="btn-disable"  onClick={() => handleDeletePrinter(showPrinter.name)}>Xóa máy in</button>
                         <button onClick={() => setShowDetails(false)}>Trở lại</button>
                     </div>
                 )}
@@ -176,6 +238,7 @@ function Body() {
             <div key={printer.id} className="printer-item">
               <img src="https://phucanhcdn.com/media/product/23196_may_in_canon_lbp6230dn_03.jpg" alt={`Máy in ${printer.id}`} className="mx-auto mb-2" />
               <button className="btn-primary" onClick={() => handlePrinterClick(printer)}>Máy in {printer.id}</button>
+              <ViewPrinterHistoryButton  printerHistory={printer.print_history}/>
             </div>
           ))}
                 </div>

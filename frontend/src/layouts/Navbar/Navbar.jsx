@@ -20,7 +20,6 @@ const Navbar = () => {
         <Link to="/createaccount">Tài khoản sinh viên</Link>
         <Link to="/manageactivity">Quản lý sinh viên</Link>
         <Link to="/buyingpermis">Quản lý mua giấy</Link>
-        <Link to="/viewprinter">Quản lý máy in </Link>
       </div>
       <div className="user-info">
         <img src={user} alt="User" className="user-logo" onClick={toggleDropdown} />

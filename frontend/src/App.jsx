@@ -23,6 +23,7 @@ import SPrintHistory from "./components/student-history-print";
 import Navbarst from "./layouts/Navbar/NavSt";
 import NavbarMg from "./layouts/Navbar/NavMg";
 import Logout from "./components/Logout";
+import ScheduleUpdate from "./components/ChangeDefaultPage";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
             <Route path="/manager" element={<Navbar/>} />
             <Route path="/SPSO" element={<NavbarMg/>} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/modifydefaultpages" element={<ScheduleUpdate />} />
           </Routes>
         </div>
         <Footer />

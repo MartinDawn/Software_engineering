@@ -26,7 +26,7 @@ urlpatterns = [
     path('spso/printer/addPrinter/',AddPrinterView.as_view()),
     path('spso/printer/enablePrinting/',EnablePrinter.as_view()),
     path('spso/printer/disablePrinting/',DisablePrinter.as_view()),
-    path('spso/printer/deletePrinting/',DeletePrinter.as_view()),
+    path('spso/printer/deletePrinting/<int:printer_id>/',DeletePrinter.as_view()),
 
     path('spso/printer/studentActivity/',ViewStudentActivity.as_view()),
     path('spso/printer/printerActivity/',ViewPrinterActivity.as_view()),

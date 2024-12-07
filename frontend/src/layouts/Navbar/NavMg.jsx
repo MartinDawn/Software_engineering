@@ -18,8 +18,9 @@ const NavbarMg = () => {
       <div className="menu">
         <Link to="/SPSO">Trang chủ</Link>
         <Link to="/manage">Quản Lý</Link>
-        <Link to="/printhistory">Lịch sử hệ thống</Link>
+        <Link to="/printhistory">Quản lý sinh viên</Link>
         <Link to="/report">Báo Cáo</Link>
+        <Link to="/modifydefaultpages">Thay đổi số trang mặc định</Link>
       </div>
       <div className="user-info">
         <img src={user} alt="User" className="user-logo" onClick={toggleDropdown} />

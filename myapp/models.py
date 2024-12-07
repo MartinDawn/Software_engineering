@@ -80,4 +80,4 @@ class report(models.Model):
     totalPaperPrinting=models.IntegerField(default=0)
     datetime= models.DateField(default='2024-01-01')
     class Meta: 
-        db_table = 'Report'
+        db_table = 'report'

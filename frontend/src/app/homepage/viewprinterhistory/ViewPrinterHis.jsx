@@ -4,7 +4,6 @@ import Navbar from "../../../layouts/Navbar/Navbar";
 
 function ViewPrinterHistoryPage() {
   return <>
-  <Navbar />
   <ViewPrinterHistory />
   </>;
 }

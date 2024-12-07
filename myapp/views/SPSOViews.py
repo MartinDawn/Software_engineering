@@ -94,8 +94,7 @@ class DisablePrinter(APIView):
 class DeletePrinter(APIView):
     permission_classes = [IsAuthenticated]
 
-    def delete(self, request):
-        printer_id = request.data.get('id')
+    def delete(self, request, printer_id=None):
         
         if not printer_id:
             return Response({"message": "Printer ID is required"}, status=status.HTTP_400_BAD_REQUEST)
@@ -314,16 +313,13 @@ class EnableFileTypeForAllPrinter(APIView):
         except Exception as error:
             return Response({"message": str(error)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 # ---------------------sched--------------------------------------
-import schedule
+import threading
 import time
 from datetime import datetime
-from django.utils import timezone
-import threading
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from ..models import User
+from django.utils import timezone
 
 class ChangeDefaultPage(APIView):
     permission_classes = [IsAuthenticated]
@@ -348,15 +344,14 @@ class ChangeDefaultPage(APIView):
                 }, status=status.HTTP_400_BAD_REQUEST)
 
             def job():
-                    students = User.objects.filter(role="student")
-                    for student in students:
-                        student.availablePages += default_page
-                        student.save()
-                    print("Default pages updated for all students.")
-            
-            schedule.every(delay).seconds.do(job)
-            self.scheduler_thread = threading.Thread(target=self.run_scheduler)
-            self.scheduler_thread.start()
+                students = User.objects.filter(role="student")
+                for student in students:
+                    student.availablePages += default_page
+                    student.save()
+                print("Default pages updated for all students.")
+
+            scheduler_thread = threading.Thread(target=self.run_job_with_delay, args=(job, delay))
+            scheduler_thread.start()
 
             readable_time = naive_datetime.strftime("%d/%m/%Y %H:%M:%S")
 
@@ -366,6 +361,10 @@ class ChangeDefaultPage(APIView):
         
         except Exception as error:
             return Response({"message": str(error)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    def run_job_with_delay(self, job, delay):
+        time.sleep(delay)
+        job()
 
 
 # ----------------Thêm loại giấy mới--------------------------

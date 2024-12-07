@@ -29,6 +29,7 @@ def createReportEveryMonth():
 
 def run_scheduler():
     schedule.every(30).days.at("00:00").do(createReportEveryMonth)
+    # schedule.every(5).seconds.do(createReportEveryMonth)
     
     while True:
         schedule.run_pending()

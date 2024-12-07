@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/PrintHis.css';
 import logoBK from '../Image/logo_BK2-removebg.png';
 import NavbarMg from '../layouts/Navbar/NavMg';
+import ViewPrintButton from '../app/buttons/ViewPrintHistoryButton/ViewPrintButton';
+import ViewPaymentButton from '../app/buttons/ViewPaymentButton/ViewPay';
+import api from '../api';
 
 function Header() {
     return (
@@ -13,17 +16,33 @@ function Header() {
 
 function PrintHistoryFilter() {
     const [selectedPrinter, setSelectedPrinter] = useState('');
+    const [printHistoryData, setPrintHistoryData] = useState([]);
     const [startDate, setStartDate] = useState(null);
     const [inputValue, setInputValue] = useState('');
     const [endDate, setEndDate] = useState(null);
     const [userId, setUserId] = useState('');
     const [userInfo, setUserInfo] = useState(null);
     const printers = ["Printer 1", "Printer 2", "Printer 3", "Printer 4"];
-    const printHistoryData = [
-        { id: 16, name: "CanNguyen", email: "cannguyentest@gmail.com", role: "Student", availablePages: "100", major:"Computer Science" ,enrollmentYear: "2022" },
-        { id: 15, name: "Leo", email: "leotest@gmail.com", role: "Manager", availablePages: "150",major:"Computer Science", enrollmentYear: "2020" },
-        // Add more rows as needed
-    ];
+ 
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await api.get('/spso/printer/studentActivity/', {
+              headers: {
+                'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
+              }
+            });
+    
+            const data = response.data;
+            setPrintHistoryData(data.students);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+    
+        fetchData();
+      }, []);
 
     const handleFetchUserInfo = async () => {
         try {
@@ -89,18 +108,22 @@ function PrintHistoryFilter() {
                         <th>Số trang còn lại</th>
                         <th>Ngành</th>
                         <th>Năm nhập học</th>
+                        <th>Xem lịch sử mua giấy </th>
+                        <th>Xem lịch sử in </th>
                     </tr>
                 </thead>
                 <tbody>
                     {printHistoryData.map((item) => (
                         <tr key={item.id}>
                             <td>{item.id}</td>
-                            <td>{item.name}</td>
+                            <td>{item.username}</td>
                             <td>{item.email}</td>
                             <td>{item.role}</td>
                             <td>{item.availablePages}</td>
                             <td>{ item.major}</td>
-                            <td>{ item.enrollmentYear}</td>
+                            <td>{ item.enrollment_year}</td>
+                            <th> <ViewPaymentButton paymentHistory={item.payment_history}/></th>
+                            <th> <ViewPrintButton printHistory={item.print_history} /> </th>
                         </tr>
                     ))}
                 </tbody>
