@@ -17,7 +17,7 @@ const Navbar = () => {
       <Link to="/manager" className="logo">BK Printer</Link>
       <div className="menu">
         <Link to="/manager">Trang chủ</Link>
-        <Link to="/createaccount">Tài khoản sinh viên</Link>
+        {/* <Link to="/createaccount">Tài khoản sinh viên</Link> */}
         <Link to="/manageactivity">Quản lý sinh viên</Link>
         <Link to="/buyingpermis">Quản lý mua giấy</Link>
       </div>
