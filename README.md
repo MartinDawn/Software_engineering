@@ -31,33 +31,47 @@ Hệ thống HCMUT-SSPS mang lại lợi ích thiết thực cho nhiều bên li
 ## Activity diagram
 
 ### Login
+![log in usecase](https://github.com/user-attachments/assets/aa27ec16-b4ad-4ae4-991f-2229c32d6bfd)
+
 
 ### Print
-
-### Add printer 
+![printing docs usecase - Page 1](https://github.com/user-attachments/assets/05239cdc-71de-4226-8e76-66c661db9eb8)
 
 
 ### Buy paper
+![Buy papers usecase](https://github.com/user-attachments/assets/281a77b4-c8e4-4aff-99bf-1c503154c9ca)
+
 
 
 ## Sequence diagram
 
 ### Login
+![LoginSequenceDiagram](https://github.com/user-attachments/assets/7fd2c5fd-7246-4d7e-bceb-2bd3586de676)
+
 
 ### Print
+![Printing-sequence-diagram](https://github.com/user-attachments/assets/2322bc64-0dbb-491d-bd43-4f2d39e4db53)
+
 
 ### Add printer 
+![AddPrinter](https://github.com/user-attachments/assets/f926ead4-2d31-4633-84ac-b2445f853276)
+
 
 
 ### Buy paper
+![BuyPaper](https://github.com/user-attachments/assets/ca2975ed-8390-42f9-b768-469ac76eb005)
+
 
 
 
 ## Component diagram
+![component diagram](https://github.com/user-attachments/assets/0a185699-1aab-4777-be2f-17ffbba82060)
 
 
 ## Class diagram
+![class diagram](https://github.com/user-attachments/assets/c8298299-5b3a-4bfb-85ed-0fa13ea136a0)
 
 
 ## Layered architecture 
+![Layered Architecture](https://github.com/user-attachments/assets/6148036a-f567-43db-ac2f-f3c10774ef55)
 
