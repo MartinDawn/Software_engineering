@@ -69,7 +69,7 @@ Hệ thống HCMUT-SSPS mang lại lợi ích thiết thực cho nhiều bên li
 
 
 ## Class diagram
-![class diagram](https://github.com/user-attachments/assets/c8298299-5b3a-4bfb-85ed-0fa13ea136a0)
+![class diagram](https://github.com/user-attachments/assets/5a2fa55c-5361-4dc5-a508-b33d736bfda1)
 
 
 ## Layered architecture 
