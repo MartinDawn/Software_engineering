@@ -20,6 +20,16 @@ Hệ thống HCMUT-SSPS mang lại lợi ích thiết thực cho nhiều bên li
 - **Đối với ban quản lý nhà trường**: Có thể dễ dàng cho phép sinh viên chưa có tài khoản xác thực SSO, tiếp cận với việc in ấn của nhà trường. Đồng thời có thể quản lí thời gian thu phí của sinh viên, mang lại tiện lợi tránh tắc nghẽn hệ thống.
 
 
+## Công nghệ sử dụng
+
+### Backend
+- **Framework**: Django
+- **Database**: Microsoft SQL Server (MSSQL)
+
+### Frontend
+- **Framework**: React
+- **Server**: Node.js
+
 ## Use case diagram for whole system:
 ![Use case diagram](https://github.com/user-attachments/assets/52b0db28-7c93-4f26-b54b-e64c508e84ab)
 
@@ -74,4 +84,7 @@ Hệ thống HCMUT-SSPS mang lại lợi ích thiết thực cho nhiều bên li
 
 ## Layered architecture 
 ![Layered Architecture](https://github.com/user-attachments/assets/6148036a-f567-43db-ac2f-f3c10774ef55)
+
+
+
 
