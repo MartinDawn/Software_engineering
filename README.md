@@ -28,7 +28,6 @@ Hệ thống HCMUT-SSPS mang lại lợi ích thiết thực cho nhiều bên li
 
 ### Frontend
 - **Framework**: React
-- **Server**: Node.js
 
 ## Use case diagram for whole system:
 ![Use case diagram](https://github.com/user-attachments/assets/52b0db28-7c93-4f26-b54b-e64c508e84ab)
